@@ -65,7 +65,7 @@ questions.forEach((q, index) => {
                 overlay.classList.add('question');
                 gridItem.classList.add('clicked');   
             }
-            else if (overlay.classList.contains("show-joker")) {
+            else if (overlay.classList.contains("show-joker")) { //sorry for the horrible code hoever reads this lmao
                 overlayContent.classList.remove("show-joker");
                 overlay.classList.remove("show");
             }
