@@ -1,0 +1,68 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #a1c181;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr); /* Beispiel für 8 Spalten */
+    gap: 10px;
+    padding: 20px;
+    height: 95vh; /* 100% der Bildschirmhöhe */
+    overflow-y: auto; /* Scrollen, falls nötig */
+    overflow-x: hidden; /* Horizontales Scrollen verhindern */
+}
+
+.grid-item {
+    background-color: #619b8a;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    border: 3px solid black;
+    border-radius: 25px;
+    font-size: 360%; /* Größe des Textes */
+    font-weight: bold; /* Fettschrift */
+    display: flex; /* Flexbox zur Zentrierung von Inhalt */
+    justify-content: center; /* Horizontal zentrieren */
+    align-items: center; /* Vertikal zentrieren */
+}
+
+
+.grid-item.clicked {
+    background-color: #233d4d;
+    color: white;
+}
+
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999; /* Stellen Sie sicher, dass das Overlay über allem liegt */
+}
+
+#overlay.show {
+    display: flex;
+}
+
+#overlayContent {
+    background-color: #619b8a;
+    padding: 20px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 400%;
+    border: 3px solid black;
+    border-radius: 25px;
+}
