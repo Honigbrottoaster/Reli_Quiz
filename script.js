@@ -12,7 +12,7 @@ const questions = [
     { question: "Wie heißt das heilige Buch der Muslime?", answer: "Koran" },
     { question: "Wer empfing die Zehn Gebote?", answer: "Mose" },
     { question: "Wie heißt das wichtigste Gebet im Christentum?", answer: "Vaterunser" },
-    { question: "JOKER!", answer: "Du musst KEINE Frage beantworten!"},
+    { question: "joker", answer: "joker"}, //JOKER
     { question: "Was feiern Christen an Weihnachten?", answer: "Die Geburt Jesu" },
     { question: "Was symbolisiert die Taube im Christentum?", answer: "Den Heiligen Geist" },
     { question: "Wie viele Tiere jeder Art nahm Mose mit auf die Arche?", answer: "Es war Noah, nicht Mose" },
@@ -26,7 +26,7 @@ const questions = [
     { question: "Hat Abraham seinen Sohn wirklich geopfert?", answer: "Nein, Gott wollte ihn prüfen" },
     { question: "Was feiern Christen an Ostern?", answer: "Die Auferstehung Jesu" },
     { question: "Was ist der Sabbat?", answer: "Der Ruhetag der Juden" },
-    { question: "JOKER!", answer: "Du musst KEINE Frage beantworten!"},
+    { question: "joker", answer: "joker"}, //JOKER
     { question: "Wie heißt der Berg, auf dem Mose die Zehn Gebote empfing?", answer: "Berg Sinai" },
     { question: "Wann beginnt das Kirchenjahr?", answer: "Am 1. Advent" }, 
     { question: "Wer ist der Stammvater von Judentum, Christentum und Islam?", answer: "Abraham" }, 
@@ -52,14 +52,28 @@ questions.forEach((q, index) => {
     gridItem.textContent = `${index + 1}`;
     gridItem.dataset.question = q.question;
     gridItem.dataset.answer = q.answer;
+    if(q.question == "joker" && q.answer == "joker") {
+        gridItem.classList.add('joker')
+    }
 
     gridItem.addEventListener('click', () => {
         if (!overlay.classList.contains('show')) {
-            overlayContent.textContent = "Frage: " + q.question;
-            overlay.dataset.answer = q.answer; 
-            overlay.classList.add('show');
-            overlay.classList.add('question');
-            gridItem.classList.add('clicked'); 
+            if(!gridItem.classList.contains('joker')) {
+                overlayContent.textContent = "Frage: " + q.question;
+                overlay.dataset.answer = q.answer; 
+                overlay.classList.add('show');
+                overlay.classList.add('question');
+                gridItem.classList.add('clicked');   
+            }
+            else if (overlay.classList.contains("show-joker")) {
+                overlayContent.classList.remove("show-joker");
+                overlay.classList.remove("show");
+            }
+            else {
+                overlay.classList.add("show");
+                overlayContent.classList.add("show-joker");
+                gridItem.classList.add("clicked");
+            }
         }
     });
 
@@ -68,7 +82,11 @@ questions.forEach((q, index) => {
 
 overlay.addEventListener('click', () => {
     if (overlay.classList.contains('show')) {
-        if (overlay.classList.contains('question')) {
+        if (overlayContent.classList.contains("show-joker")) {
+            overlayContent.classList.remove("show-joker");
+            overlay.classList.remove("show");
+        }
+        else if (overlay.classList.contains('question')) {
             overlayContent.textContent = "Antwort: " + overlay.dataset.answer;
             overlay.classList.remove('question');
             overlay.classList.add('answer');
