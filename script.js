@@ -45,6 +45,7 @@ const gridContainer = document.getElementById('gridContainer');
 const overlay = document.getElementById('overlay');
 const overlayContent = document.getElementById('overlayContent');
 
+overlay.classList.add("hide");
 
 questions.forEach((q, index) => {
     const gridItem = document.createElement('div');
@@ -60,7 +61,14 @@ questions.forEach((q, index) => {
         if (!overlay.classList.contains('show')) {
             if(!gridItem.classList.contains('joker')) {
                 overlayContent.textContent = "Frage: " + q.question;
-                overlay.dataset.answer = q.answer; 
+                overlay.dataset.answer = q.answer;
+                if(overlay.classList.contains("hide-no-animation")) {
+                    overlay.classList.remove("hide-no-animation");
+                }
+                else {
+                    overlay.classList.remove("hide");
+                }
+                overlayContent.classList.remove("attention-animation");
                 overlay.classList.add('show');
                 overlay.classList.add('question');
                 gridItem.classList.add('clicked');   
@@ -70,8 +78,16 @@ questions.forEach((q, index) => {
                 overlay.classList.remove("show");
             }
             else {
+                if(overlay.classList.contains("hide-no-animation")) {
+                    overlay.classList.remove("hide-no-animation");
+                }
+                else {
+                    overlay.classList.remove("hide");
+                }
+                overlayContent.classList.remove("attention-animation");
                 overlay.classList.add("show");
                 overlayContent.classList.add("show-joker");
+                overlayContent.textContent = "";
                 gridItem.classList.add("clicked");
             }
         }
@@ -85,15 +101,19 @@ overlay.addEventListener('click', () => {
         if (overlayContent.classList.contains("show-joker")) {
             overlayContent.classList.remove("show-joker");
             overlay.classList.remove("show");
+            overlay.classList.add("hide-no-animation");
         }
         else if (overlay.classList.contains('question')) {
             overlayContent.textContent = "Antwort: " + overlay.dataset.answer;
             overlay.classList.remove('question');
             overlay.classList.add('answer');
+            overlayContent.classList.add("attention-animation"); 
         } else if (overlay.classList.contains('answer')) {
             overlay.classList.remove('show');
             overlay.classList.remove('answer');
-            overlayContent.textContent = ""; 
+            overlay.classList.add("hide");
+            //overlayContent.classList.remove("attention-animation");
         }
     }
 });
+
